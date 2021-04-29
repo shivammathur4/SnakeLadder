@@ -14,41 +14,52 @@ namespace SnakeLadder
             const int noPlayOption = 0;
             const int ladderOption = 1;
             const int snakeOption = 2;
-            const int playerOne = 1;
-            
-            int positionOne = 0;
+            int player = 0;
+            //2 players are starting the game
+            int[] playerPosition = new int[2] { 0, 0 };
             int diceRollCount = 0;
-            
-            while (positionOne < 100)
+            //while loop to check which player is playing at which position
+            while (playerPosition[player] < 100)
             {
                 Random random = new Random();
                 int dieRoll = random.Next(1, 7);
                 diceRollCount++;
                 int options = random.Next(0, 3);
-                Console.WriteLine("Position: " + positionOne);
+                //switch case to check the condition
                 switch (options)
                 {
                     case noPlayOption:
-                        Console.WriteLine("Position: " + positionOne);
+                        Console.WriteLine("Player " + player + "Position: " + playerPosition[player]);
                         break;
                     case ladderOption:
-                        if (positionOne + dieRoll <= 100)
+                        if (playerPosition[player] + dieRoll <= 100)
                         {
-                            positionOne = positionOne + dieRoll;
+                            playerPosition[player] = playerPosition[player] + dieRoll;
                         }
-                        Console.WriteLine("Position: " + positionOne);
+                        Console.WriteLine("Player " + player + "Position: " + playerPosition[player]);
                         break;
                     case snakeOption:
-                        positionOne = positionOne - dieRoll;
-                        if (positionOne < 0)
+                        playerPosition[player] = playerPosition[player] - dieRoll;
+                        if (playerPosition[player] < 0)
                         {
-                            positionOne = 0;
+                            playerPosition[player] = 0;
                         }
-                        Console.WriteLine("Position: " + positionOne);
+                        Console.WriteLine("Player " + player + " Position: " + playerPosition[player]);
                         break;
                 }
+                if (options == noPlayOption || options == snakeOption)
+                {
+                    if (player == 0)
+                    {
+                        player = 1;
+                    }
+                    else
+                    {
+                        player = 0;
+                    }
+                }
             }
-            Console.WriteLine("Player Wins with Die Roll :" + diceRollCount);
+            Console.WriteLine("Player " + player + " Wins with Die Roll :" + diceRollCount);
         }
     }
 }
